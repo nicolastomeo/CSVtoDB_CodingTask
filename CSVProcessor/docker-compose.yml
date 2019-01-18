@@ -1,0 +1,10 @@
+version: '3'
+services:
+  csvprocessor:
+    build: .
+    environment:
+    - BROKER_CONN=amqp://172.17.0.1:5673
+    - BACKEND_CONN=redis://172.17.0.1:6378
+    volumes:
+    - ./data/csv_files:/csv_files
+    - ./data/logs:/logs
