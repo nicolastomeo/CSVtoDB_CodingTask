@@ -2,7 +2,7 @@
 
 The solution is structured in two folders, CSVProcessor and StorePeople.
 
-CSVProcessor is the first program of the code challenge. It contains the program (csvprocessor.py) that reads data from a csv (full name and email of people), validate it and send it to a  a message broker (RabbitMQ for the broker and Redis as the result backend) using Celery.
+CSVProcessor is the first program of the code challenge. It contains the program (csvprocessor.py) that reads data from a csv (full name and email of people), validates it and sends it to a  a message broker (RabbitMQ for the broker and Redis as the result backend) using Celery.
 
 StorePeople is the second program of the code challenge. It contains the Celery worker, that reads the jobs from the broker, updates the status of the jobs in the result backend and executes the jobs (according to the tasks.py file), storing in the database the full names and emails, considering the uniqueness of the emails. It uses SQLAlchemy to communicate with the PostgreSQL database and Alembic for the database migrations.
 
@@ -26,7 +26,7 @@ Then run the folllowing comand to start the PostgresSQL database (exposed in por
 docker-compose up 
  ```
 
-Then go to the CSVProcessor folder and edit the environment variables in docker-compose.yml file that specifies the connection to the Redis result backend (BACKEND_CONN) and the RabbitMQ broker (BROKER_CONN). If all the deploy is in one single machine you could use the docker0 interface (Docker for Linux) or the host.docker.internal dns name (Docker for Windows or Mac) to specifiy the conection from the csvprocessor docker container to the host machine.
+Then go to the CSVProcessor folder and edit the environment variables in docker-compose.yml file that specifies the connection to the Redis result backend (BACKEND_CONN) and the RabbitMQ broker (BROKER_CONN). If all the deploy is in one single machine you could use the docker0 interface (Docker for Linux) or the host.docker.internal dns name (Docker for Windows or Mac) to specifiy the connection from the csvprocessor docker container to the host machine.
 
 After editing those variables run:
 ```
