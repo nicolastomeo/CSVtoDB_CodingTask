@@ -21,7 +21,7 @@ Afterwards run the following command to execute the Alembic migrations :
 docker-compose run -e PYTHONPATH=. storepeople ./wait-for-it.sh -t 10 postgres:5432 -- alembic upgrade head
 ```
 The wait-for-it is used to wait for the database to be ready because [it could not be](https://docs.docker.com/compose/startup-order/). 
-Then run the folllowing comand to start the PostgresSQL database (exposed in port 5434), the Redis result backend (port 6378) , the RabbitMQ broker (port 5673) and the Celery worker that will execute the tasks: 
+Then run the folllowing command to start the PostgresSQL database (exposed in port 5434), the Redis result backend (port 6378) , the RabbitMQ broker (port 5673) and the Celery worker that will execute the tasks: 
 ```
 docker-compose up 
  ```
