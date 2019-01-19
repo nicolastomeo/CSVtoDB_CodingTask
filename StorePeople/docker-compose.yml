@@ -33,6 +33,7 @@ services:
     - postgres
     - redis
     - rabbitmq
+
 volumes:
-  postgresqldata:
   redisdata:
+  postgresqldata:

@@ -31,12 +31,13 @@ class CSVProcessor:
         self.file_path = file_path
         self.logger = logging.getLogger('csvprocessor')
 
-    def process_row(self, row: List) -> Tuple[Optional[str], Optional[str]]:
+    def process_row(self, pos: int, row: List) -> Tuple[Optional[str], Optional[str]]:
         """
-        Check lengh of row and extracts full_name and email without trailing spaces
-        Then checks that full name is not empty and  the email matchs with the email_pattern regex
+        Check length of row and extracts full_name and email without trailing spaces
+        Then checks that full name is not empty and  the email matches with the email_pattern regex
+        :param pos: Position of row in the csv
         :param row: List that represents the csv row
-        :return: Tuple of lenght 2 with valid full_name and email or None in both fields
+        :return: Tuple of length 2 with valid full_name and email or None in both fields
         """
         if len(row) > 1:
             full_name = row[0].strip()  # simple cleaning of extra whitespaces
@@ -45,11 +46,11 @@ class CSVProcessor:
                 if self.email_pattern.match(email):
                     return full_name, email
                 else:
-                    self.logger.debug(f"Skipping row {i} because it has invalid email {email}")
+                    self.logger.debug(f"Skipping row {pos} because it has invalid email {email}")
             else:
-                self.logger.debug(f"Skipping row {i} because it has empty full name")
+                self.logger.debug(f"Skipping row {pos} because it has empty full name")
         else:
-            self.logger.debug(f"Skipping row {i} because it's missing fields")
+            self.logger.debug(f"Skipping row {pos} because it's missing fields")
         return None, None
 
     def read_csv(self):
@@ -63,7 +64,7 @@ class CSVProcessor:
                 try:
                     for i, row in enumerate(reader):
                         if len(row) > 1:
-                            full_name, email = self.process_row(row)
+                            full_name, email = self.process_row(i, row)
                             if full_name is not None:
                                 yield full_name, email
                 except UnicodeDecodeError:
