@@ -63,10 +63,9 @@ class CSVProcessor:
                 reader = csv.reader(f)
                 try:
                     for i, row in enumerate(reader):
-                        if len(row) > 1:
-                            full_name, email = self.process_row(i, row)
-                            if full_name is not None:
-                                yield full_name, email
+                        full_name, email = self.process_row(i, row)
+                        if full_name is not None:
+                            yield full_name, email
                 except UnicodeDecodeError:
                     self.logger.exception("Character in file not encoded in utf-8")
                 except csv.Error:
